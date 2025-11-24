@@ -13,5 +13,8 @@ async function getWeatherData(city) {
         return;
     }
 }
+//4.Yükleniyor mesajı göster
+resultDiv.innerHTML = "<p>Hava durumu bilgisi yükleniyor...</p>"
 
-
+//5. Dinamik API URL oluştuurldu (key ve query paremetreleri dinamik olarak eklenir)
+const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`

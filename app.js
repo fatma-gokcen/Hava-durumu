@@ -37,4 +37,46 @@ async function getWeatherData(city) {
     } catch (error) {
         resultDiv.innerHTML = `Hata: ${error.message}`;
     }
+
+    // 7. Veriyi HTML'e Yerleştirme Fonksiyonu
+    function displayWeather(data) {
+        const cityName = data.location.name;
+        const tempC = data.current.temp_c;
+        const conditionText = data.current.condition.text;
+        const iconUrl = data.current.condition.icon;
+        const humidity = data.current.humidity;
+        const windKph = data.current.wind_kph;
+
+        resultDiv.innerHTML = `
+        <h2>${cityName}, ${data.location.country}</h2>
+        <div class="weather-details">
+            <img src="https:${iconUrl}" alt="${conditionText}" class="weather-icon">
+            <p class="temperature">🌡️ Sıcaklık: <strong>${tempC}°C</strong></p>
+            <p class="condition">☁️ Hava Durumu: ${conditionText}</p>
+            <hr>
+            <p class="humidity">💧 Nem: ${humidity}%</p>
+            <p class="wind">💨 Rüzgar Hızı: ${windKph} kph</p>
+        </div>
+    `;
+    }
 }
+// 8. Olay Dinleyicileri (Event Listeners)
+
+// 1. Butona tıklama olayı
+searchBtn.addEventListener("click", () => {
+    // Input değerini al ve boşlukları temizle
+    const city = cityInput.value.trim();
+    getWeatherData(city);
+});
+
+cityInput.addEventListener("keyup", (event) => {
+    // Eğer basılan tuş "Enter" ise, butona tıklama işlevini çağır
+    if (event.key === "Enter") {
+        searchBtn.click();
+    }
+});
+
+//   fetch('https://api.weatherapi.com/v1/current.json?key=1e107ab9424747a5a6c170558252411&q=Istanbul')
+//   .then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(error => console.error(error));
